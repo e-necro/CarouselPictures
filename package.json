@@ -1,13 +1,16 @@
 {
   "name": "carousel-pictures",
   "version": "0.0.3",
-  "main": "./dist/app-accordion.umd.js",
-  "module": "./dist/app-accordion.es.js",
+  "description": "One of the versions of the image slider in Vue .js",
+  "author": "necroTheHuman",
+  "license": "MIT",
+  "main": "./dist/app-carousel-pictures.umd.js",
+  "module": "./dist/app-carousel-pictures.es.js",
   "type": "module",
   "exports": {
     ".": {
-      "import": "./dist/app-accordion.es.js",
-      "require": "./dist/app-accordion.umd.js"
+      "import": "./dist/app-carousel-pictures.es.js",
+      "require": "./dist/app-carousel-pictures.umd.js"
     },
     "./dist/style.css": "./dist/style.css"
   },

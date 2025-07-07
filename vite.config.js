@@ -11,15 +11,15 @@ export default defineConfig({
   build: {
     lib: {
       entry: resolve(__dirname, 'src/index.js'),
-      name: 'app-accordion', /// это в package.json так название компонента будет
-      fileName: (format) => `app-accordion.${format}.js`
+      name: 'app-carousel-pictures', /// it's component name in package.json 
+      fileName: (format) => `app-carousel-pictures.${format}.js`
     },
     rollupOptions: {
-      external: ['vue'] /// внешняя библиотека, чтоб не тащилась при сборке
+      external: ['vue'] /// outer library what not need in build
     },
     output: {
       globals: {
-        vue: 'Vue' /// указываем, что зависит от Vue. В данном случае
+        vue: 'Vue' /// it's said that is Vue depenses
       }
     }
   },

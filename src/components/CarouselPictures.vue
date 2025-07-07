@@ -88,9 +88,7 @@ export default {
         let previewUl = preview[0].parentNode;
         let previewDataContainer = previewUl.parentNode;
         let newWidth = this.slideIndex * previewWdt;
-        // TODO: 1 посчитать сколько влазиет в previewDataContainer картинок. Н-р, 2 раза по 4 единицы и еще 2 единицы в 3ем разе. Подсчитывать только когда переходит эти колва.
-        // TODO: 2короче логика сбоит. Условие уменьшяния currentBunch понижает значение криво
-        //  TODO: 3 2е условие заставило ее работать, но ширина чуть кривенько. Допилить
+
         console.log(newWidth, previewDataContainer.clientWidth * this.currentBunch, previewDataContainer.clientWidth ,' - ', this.currentBunch);
         if (newWidth >= previewDataContainer.clientWidth * this.currentBunch && newWidth !== 0) {
           // previewUl.style.transform = "translateX(-" + newWidth + "px )";
@@ -136,9 +134,9 @@ export default {
   },
   watch: {
     currentBunch(newVal, oldVal) {
-      console.log('old = ', oldVal, 'new = ', newVal);
+      // console.log('old = ', oldVal, 'new = ', newVal);
       if (newVal < oldVal && oldVal > 1) {
-        console.log('upd');
+        // console.log('upd');
         document.getElementsByClassName("slideShow-item-small")[0].parentNode.style.transform = "translateX(0px)";
       }
     }

@@ -25,7 +25,6 @@ export default {
   methods: {
     showImg() {
       const sliderCarousel = this.$refs.showSlidesCarousel;
-      console.log(sliderCarousel)
       if (sliderCarousel) {
         sliderCarousel.showConsole();
       }
