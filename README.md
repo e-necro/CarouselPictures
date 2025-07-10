@@ -1,4 +1,9 @@
-## Example of use
+## Carousel pictures
+Like this:
+![screenshot] (https://github.com/e-necro/CarouselPictures/tree/main/src/assets/images/preview.png)
+
+
+### Example of use
 
 1) ## Add component
 
@@ -21,7 +26,7 @@ app.use(carouselPicturies)
 app.mount('#app')
 ```
 
-2. ## Use component
+2. ### Use component
 
 
 In template of **App.vue** (in this example) add this component and button/something with click method:

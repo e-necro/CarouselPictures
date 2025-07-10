@@ -18,6 +18,10 @@
     "vue",
     "carousel pictures"
   ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/e-necro/CarouselPictures"
+  },
   "files": [
     "dist"
   ],
