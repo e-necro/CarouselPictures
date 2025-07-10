@@ -15,13 +15,14 @@ export default defineConfig({
       fileName: (format) => `app-carousel-pictures.${format}.js`
     },
     rollupOptions: {
-      external: ['vue'] /// outer library what not need in build
-    },
-    output: {
-      globals: {
-        vue: 'Vue' /// it's said that is Vue depenses
+      external: ['vue'], /// outer library what not need in build
+      output: {
+        globals: {
+          vue: 'Vue' /// it's said that is Vue depenses
+        },
       }
-    }
+    },
+   
   },
   plugins: [
     vue(),
