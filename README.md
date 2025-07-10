@@ -1,6 +1,6 @@
 ## Carousel pictures
 Like this:
-![screenshot] (https://github.com/e-necro/CarouselPictures/tree/main/src/assets/images/preview.png)
+![screenshot] (https://github.com/e-necro/CarouselPictures/tree/main/src/assets/images/preview.png?raw=true)
 
 
 ### Example of use
