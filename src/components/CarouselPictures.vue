@@ -1,12 +1,12 @@
 <template lang="pug">
-  .slideShow(:class="{'active' : showed === true  }" @click="close")
+  .slideShow(:class="{'active' : showed === true  }" )
     .slideShow-close(@click="close")
-    .slideShow-container(@click.stop)
-      .slideShow-container__big-img
+    .slideShow-container(@touchstart="handleTouchStart" @touchend="handleTouchEnd")
+      .slideShow-container__big-img(@mousedown="handleMouseDown" @mouseup="handleMouseUp") 
         .slideShow-item.slideShow-fade(
           v-for="(slideItem, index) in aSlides"
           v-bind:key="'slideItem' + index"
-          @click="showSlides(index)"
+          :data-id="index + 1"
         )
           img(:src="slideItem")
       .slideShow-container__preview(v-if="showPreview")
@@ -47,19 +47,50 @@ export default {
     showPreview: {
       type: Boolean,
       default: true
+    },
+    autoPlay: {
+      type: Boolean,
+      default: false
+    },
+    autoplaySpeed:{
+      type: Number,
+      default: 3000
     }
   },
   data() {
     return {
+      containerId: NaN,
       slideIndex: 1,
       showed: false,
-      currentBunch: 1
+      currentBunch: 1,
+      intervalID: null,
+      stopAutoPlay: false,
     }
   },
   methods: {
     showConsole(str) {
-      this.showSlides(1);
-      this.showed = !this.showed;
+      if (this.showSlides && this.autoPlay) {
+        try {
+          if (typeof this.autoplaySpeed == "number" && this.autoplaySpeed >= 1000) {
+            // ok
+          } else {
+            this.autoplaySpeed = 1000;
+          } 
+        } catch (error) {
+          this.autoplaySpeed = 1000;
+        }
+        this.showSlides(this.slideIndex);
+        this.slideIndex += 1;
+        this.intervalID = setInterval( () => {
+         this.ShowByInterval();
+        }, this.autoplaySpeed );
+        
+        this.showed = !this.showed;
+        
+      } else {
+        this.showSlides(1);
+        this.showed = !this.showed;
+      }
     },
 
     plusSlides(index) {
@@ -77,10 +108,15 @@ export default {
         document.getElementsByClassName("slideShow-item-small")[0].parentNode.style.transform = "translateX(0px)";
       }
       if (n < 1) {this.slideIndex = slides.length}
-      for (i = 0; i < slides.length; i++) {
+      for (let i = 0; i < slides.length; i++) {
         slides[i].style.display = "none";
       }
-      slides[this.slideIndex-1].style.display = "block";
+      try {
+        slides[this.slideIndex-1].style.display = "block";  
+      } catch (error) {
+        slides[1].style.display = "block";  
+      }
+      
 
       if (this.showPreview) {
         let preview = document.getElementsByClassName("slideShow-item-small");
@@ -89,7 +125,7 @@ export default {
         let previewDataContainer = previewUl.parentNode;
         let newWidth = this.slideIndex * previewWdt;
 
-        console.log(newWidth, previewDataContainer.clientWidth * this.currentBunch, previewDataContainer.clientWidth ,' - ', this.currentBunch);
+        // console.log(newWidth, previewDataContainer.clientWidth * this.currentBunch, previewDataContainer.clientWidth ,' - ', this.currentBunch);
         if (newWidth >= previewDataContainer.clientWidth * this.currentBunch && newWidth !== 0) {
           // previewUl.style.transform = "translateX(-" + newWidth + "px )";
           previewUl.style.transform = "translateX(-" + previewDataContainer.clientWidth * this.currentBunch + "px )";
@@ -104,17 +140,48 @@ export default {
         }
 
 
-        for (i = 0; i < preview.length; i++) {
+        for (let i = 0; i < preview.length; i++) {
           preview[i].className = preview[i].className.replace(" active", "");
         }
-        preview[this.slideIndex - 1].className += " active";
+        try {
+          preview[this.slideIndex - 1].className += " active";  
+        } catch (error) {
+          preview[1].className += " active";  
+        }
+        
       }
     },
     close() {
       this.showed = false;
+      this.slideIndex = 1;
+      try {
+        clearInterval(this.intervalID);
+      } catch (error) {}
+    },
+    ShowByInterval() {
+      if (!this.stopAutoPlay) {
+        this.showSlides(this.slideIndex);
+        this.slideIndex += 1;  
+      }
+      
+    },
+    handleMouseUp() {
+      this.stopAutoPlay = false
+    },
+    handleMouseDown() {
+      this.stopAutoPlay = true
+    },
+    handleTouchStart() {
+      this.stopAutoPlay = true
+    }, 
+    handleTouchEnd() {
+      this.stopAutoPlay = false
     }
+
   },
   mounted() {
+    this.containerId = document.getElementsByClassName('slideShow-container__big-img');
+
     window.addEventListener('keydown', (e) => {
       switch (e.key) {
         case 'ArrowRight':
@@ -124,13 +191,20 @@ export default {
           this.showSlides(this.slideIndex -= 1);
           break;
         case 'Escape':
-          this.showed = false;
+          this.close();
           break;
       
         default:
           break;
       }
     })
+  },
+  onBeforeUnmount() {
+    try {
+      clearInterval(this.intervalID);
+    } catch (error) {
+      
+    }
   },
   watch: {
     currentBunch(newVal, oldVal) {
@@ -190,6 +264,8 @@ export default {
       img
         max-height: 65vh
         max-width: 100%
+        &:hover
+          cursor: grabbing
     &__preview
       position: relative
       padding: 0 10%

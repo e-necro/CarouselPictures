@@ -1,6 +1,6 @@
 ## Carousel pictures
 Like this:
-![screenshot](/src/assets/images/preview.png)
+![screenshot] (https://raw.githubusercontent.com/e-necro/CarouselPictures/refs/heads/main/src/assets/images/preview.png)
 
 
 ### Example of use
@@ -36,6 +36,8 @@ In template of **App.vue** (in this example) add this component and button/somet
     :aSlides="arSlides"
     ref="showSlidesCarousel"
     :show-preview="true"
+    :auto-play="true"
+    :autoplay-speed="3500"
   ></CarouselPictures>
   <button @click="showImg">Show slider</button>
 </template>
@@ -44,6 +46,8 @@ where is:
  - **aSlides** - array with "/path/to/image"
  - **ref="showSlidesCarousel"** - this is necessary to call the slider
  - **show-preview** - true/false(default) to show/not show list of preview images  
+ - **auto-play** - true/false(default) to auto play slider
+ - **autoplay-speed** - speed autoplay in millisecond (default = 1000)
 ---
 
 Click method of button :

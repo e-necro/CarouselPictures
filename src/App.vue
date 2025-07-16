@@ -3,6 +3,8 @@
     :aSlides="arSlides"
     ref="showSlidesCarousel"
     :show-preview="true"
+    :auto-play="true"
+    :autoplay-speed="3500"
   ></CarouselPictures>
   <button @click="showImg">Show slider</button>
 </template>
