@@ -47,7 +47,7 @@ where is:
  - **ref="showSlidesCarousel"** - this is necessary to call the slider
  - **show-preview** - true/false(default) to show/not show list of preview images  
  - **auto-play** - true/false(default) to auto play slider
- - **autoplay-speed** - speed autoplay in millisecond (default = 1000)
+ - **autoplay-speed** - speed autoplay in millisecond (default = 3000, min = 1000)
 ---
 
 Click method of button :
