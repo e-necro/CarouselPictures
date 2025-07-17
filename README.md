@@ -2,6 +2,27 @@
 Like this:
 ![screenshot] (https://raw.githubusercontent.com/e-necro/CarouselPictures/refs/heads/main/src/assets/images/preview.png)
 
+### params
+```
+  <CarouselPictures 
+    :aSlides="arSlides"
+    ref="showSlidesCarousel"
+    :show-preview="true"
+    :auto-play="true"
+    :autoplay-speed="3500"
+  ></CarouselPictures>
+```
+where is:
+ - **aSlides** - array with "/path/to/image"
+ - **ref="showSlidesCarousel"** - this is necessary to call the slider
+ - **show-preview** - true/false(default) to show/not show list of preview images  
+ - **auto-play** - true/false(default) to auto play slider
+ - **autoplay-speed** - speed autoplay in millisecond (default = 3000, min = 1000)
+
+See example below for connection
+---
+
+
 
 ### Example of use
 
