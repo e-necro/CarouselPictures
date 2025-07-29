@@ -2,7 +2,7 @@
   <CarouselPictures 
     :aSlides="arSlides"
     ref="showSlidesCarousel"
-    :show-preview="true"
+    :show-preview="false"
     :auto-play="true"
     :autoplay-speed="3500"
     :lazy-load-imgs="true"

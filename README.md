@@ -7,9 +7,10 @@ Like this:
   <CarouselPictures 
     :aSlides="arSlides"
     ref="showSlidesCarousel"
-    :show-preview="true"
+    :show-preview="false"
     :auto-play="true"
     :autoplay-speed="3500"
+    :lazy-load-imgs="true"
   ></CarouselPictures>
 ```
 where is:
@@ -18,6 +19,7 @@ where is:
  - **show-preview** - true/false(default) to show/not show list of preview images  
  - **auto-play** - true/false(default) to auto play slider
  - **autoplay-speed** - speed autoplay in millisecond (default = 3000, min = 1000)
+ - **lazy-load-imgs** - lazy load of main slider images. ***!!!WARNING!!1   - not work if :show-preview="true"***
 
 See example below for connection
 ---
