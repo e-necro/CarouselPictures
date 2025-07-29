@@ -5,6 +5,7 @@
     :show-preview="true"
     :auto-play="true"
     :autoplay-speed="3500"
+    :lazy-load-imgs="true"
   ></CarouselPictures>
   <button @click="showImg">Show slider</button>
 </template>

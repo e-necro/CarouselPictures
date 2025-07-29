@@ -8,7 +8,8 @@
           v-bind:key="'slideItem' + index"
           :data-id="index + 1"
         )
-          img(:src="slideItem")
+          img(v-if="lazyLoadImgs && !showPreview" :data-src="slideItem" class="lazy")
+          img(v-else :src="slideItem")
       .slideShow-container__preview(v-if="showPreview")
         .slideShow-container__data
           ul.slideShow-container__data-list
@@ -55,6 +56,10 @@ export default {
     autoplaySpeed:{
       type: Number,
       default: 3000
+    },
+    lazyLoadImgs: { /// work only in upper slider
+      type: Boolean,
+      default: false
     }
   },
   data() {
@@ -70,6 +75,10 @@ export default {
   methods: {
     showConsole(str) {
       if (this.showSlides && this.autoPlay) {
+        if (!this.showPreview)
+          if (this.lazyLoadImgs) {
+            this.lazyLoading('.slideShow-container .lazy'); 
+          }
         try {
           if (typeof this.autoplaySpeed == "number" && this.autoplaySpeed >= 1000) {
             // ok
@@ -88,6 +97,10 @@ export default {
         this.showed = !this.showed;
         
       } else {
+        if (!this.showPreview)
+          if (this.lazyLoadImgs) {
+          this.lazyLoading('.slideShow-container .lazy'); 
+        }
         this.showSlides(1);
         this.showed = !this.showed;
       }
@@ -176,6 +189,43 @@ export default {
     }, 
     handleTouchEnd() {
       this.stopAutoPlay = false
+    },
+    lazyLoading(target) {
+      let arrImgLazy = document.querySelectorAll(target);
+      if (arrImgLazy.length > 0)
+         if ('IntersectionObserver' in window) {
+          let options = {
+            // target element's parent is the viewport
+            root: null,
+            // indents
+            rootMargin: '200px',
+            // intersection percentage
+            threshold: 0
+          };
+
+          let observer = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+              if (entry.isIntersecting) {
+                let lazyImg = entry.target;
+                if (lazyImg.dataset.src) {
+                  lazyImg.src = lazyImg.dataset.src;
+                }
+                lazyImg.classList.remove('lazy');
+                delete lazyImg.dataset.src;
+                observer.unobserve(lazyImg);
+              }
+            });
+          }, options);
+
+          arrImgLazy.forEach(i => {
+            observer.observe(i);
+          });
+        } else {
+          arrImgLazy.forEach(image => {
+            image.src = image.dataset.src;
+            image.classList.remove('lazy');
+          });
+        }
     }
 
   },
